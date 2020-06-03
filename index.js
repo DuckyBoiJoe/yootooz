@@ -57,6 +57,26 @@ bot.on('message', message => {
         message.channel.send('**Successfully Kicked ' + member.user.username + '**')
         
     }
+
+    if(message.content.startsWith(`${prefix}mute`)) {
+        const ms = require('ms')
+        const user = message.mentions.members.first()
+        if(!user) return message.channel.send('You need to mention somebody!')
+        const member = message.guild.member(user)
+        if(!member) return message.channel.send('I couldn\'t find that member.')
+        const muteRole = message.guild.roles.cache.find(r => r.name == 'Muted')
+        if(!muteRole) return message.channel.send('Please create a role with the name "Muted"')
+        const time = args[1]
+        const reason = args.splice(2).join(' ')
+        if(!time) return message.channel.send('Please specify a time.')
+        member.roles.add(muteRole)
+        member.send(`You have been muted in Keerat\'s server. \nTime: ${ms(ms(time), {long: true})} \nReason: ${reason}`)
+        setTimeout(function() {
+            member.roles.remove(muteRole)
+            member.send('You have been unmuted in Keerat\'s server.')
+        }, ms(time))
+        
+    }
     
 })
 bot.login(process.env.BOT_TOKEN)
