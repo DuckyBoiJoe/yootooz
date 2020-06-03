@@ -67,8 +67,8 @@ bot.on('message', message => {
         const muteRole = message.guild.roles.cache.find(r => r.name == 'Muted')
         if(!muteRole) return message.channel.send('Please create a role with the name "Muted"')
         const time = args[1]
-        const reason = args.splice(2).join(' ')
         if(!time) return message.channel.send('Please specify a time.')
+        const reason = args.splice(2).join(' ')
         member.roles.add(muteRole)
         member.send(`You have been muted in Keerat\'s server. \nTime: ${ms(ms(time), {long: true})} \nReason: ${reason}`)
         setTimeout(function() {
