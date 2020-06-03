@@ -23,7 +23,6 @@ bot.on('message', message => {
             const filter = m => m.author.id == message.author.id
             const collector = msg.channel.createMessageCollector(filter, { time: 180000, max: 1 })
             collector.on('collect', m => {
-                collector.stop()
                 if (m.content.toLowerCase == 'cancel') return msg.channel.send('Cancellled Prompt')
                 const channel = message.guild.channels.cache.find(c => c.name == 'suggestions' && c.type == 'text')
                 channel.send(`Username: ${message.author.username} \nSuggestion: ${m.content}`)
