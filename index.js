@@ -32,9 +32,10 @@ bot.on('message', message => {
     }
 
     if(message.content.startsWith(`${prefix}approve`)) {
+        if(!message.member.roles.cache.has('suggestionreader')) return message.channel.send('You can\'t read suggestions!')
         const chan = message.mentions.channels.first()
         if(!chan) return message.channel.send('That is not a valid text channel')
-        const msg = chan.messages.cache.find(m => m.id == args[1])
+        const msg = chan.messages.cache.find(m => m.id == args[2])
         if(!msg) return message.channel.send('That is not a valid message id')
         msg.pin()
         msg.react('👍')
